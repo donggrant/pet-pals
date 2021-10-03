@@ -25,6 +25,11 @@ table {
 }
 /* End CSS Reset */
 
+body {
+	background-color: rgb(189, 204, 255);
+	font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
 h1 {font-size: 45px;}
 h2 {font-size: 40px;}
 h3 {font-size: 35px;}
@@ -41,9 +46,14 @@ a:hover {
 	color: yellow;
 }
 
-header {
-	font-size: 30px;
+header, footer {
 	background-color: rgb(111, 111, 255);
+	text-align: center;
+	padding: 1%;
+}
+
+nav {
+	display: flex;
 }
 
 header nav img {
@@ -53,10 +63,3 @@ header nav img {
 	width: auto;
 	height: auto;
 }
-
-body {
-	background-color: rgb(189, 204, 255);
-}
-
-
-
