@@ -6,7 +6,7 @@
         rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" 
         crossorigin="anonymous">
 		<link rel="stylesheet" href="styles/main.css">
-        <link rel="stylesheet" href="styles/index.css">
+        <link rel="stylesheet" href="styles/registration.css">
 
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -19,19 +19,47 @@
 	</head>  
 	<body class="registration">
 		<header>
-			<h1><a href="index.html">Pet Pals</a></h1>
 			<nav>
-                <img src="images/pet-pals-icon.png"/>
+                <img src="images/pet-pals-icon.png" alt="Pet Pals Icon"/>
                 <a href="petSearch.html"><h4>Find a Pet</h4></a>
                 <a href="adopterSearch.html"><h4>Adopters</h4></a>
                 <a href="breederSearch.html"><h4>Breeders</h4></a>
                 <a href="chat.html"><h4>My Chats</h4></a>
                 <a href="profile.html"><h4>My Profile</h4></a>
+                <a href="index.html"><h4>Sign Out</h4></a>
 			</nav>
 		</header>
-        <h1 style="margin-top:2%; margin-bottom:50%">Registration Form</h1>
+        <form action="profile.html" method="post">
+            <div class="form-group">
+                <label for="usr"><h3>Name:</h3></label>
+                <input type="text" class="form-control" id="name">
+            </div>    
+            <div class="form-group">
+                <label for="usr"><h3>About Me:</h3></label>
+                <textarea type="text" class="form-control" id="aboutMe"></textarea>
+            </div>       
+            <div class="form-group">
+                <label for="usr"><h3>Hobbies and Lifestyle:</h3></label>
+                <textarea type="text" class="form-control" id="lifestyle"></textarea>
+            </div>      
+            <div class="form-group">
+                <label for="usr"><h3>Habits and Experience:</h3></label>
+                <textArea type="text" class="form-control" id="experience"></textArea>
+            </div>   
+            <div class="form-group">
+                <label for="usr"><h3>Email address:</h3></label>
+                <input type="email" class="form-control" id="email">
+            </div>
+            <div class="form-group">
+                <label for="pwd"><h3>Password:</h3></label>
+                <input type="password" class="form-control" id="pwd">
+            </div>
+            <div class="checkbox">
+                <label><input type="checkbox">I agree to the terms of service.</label>
+            </div>
+            <button type="submit"><h4>Submit</h4></button>
+        </form>
 		<footer>
-
 			<small>Copyright © 2021 Grant Dong and Hunter Vaccaro. All Rights Reserved</small>
 		</footer>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>

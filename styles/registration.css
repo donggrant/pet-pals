@@ -1,0 +1,32 @@
+form {
+    margin-left: 20%;
+    margin-right: 20%;
+    width: auto;
+}
+
+form div {
+    margin-top: 5%;
+    margin-bottom: 5%
+}
+
+form div label, input {
+    margin: 1%;
+}
+
+#aboutMe {
+    height: 100px;
+}
+
+#lifestyle, #experience {
+    height: 200px;
+}
+
+button {
+	background-color:rgb(80, 80, 80);
+	border-radius: 10% / 50%;
+	padding: 4%;
+    margin: 2%;
+	text-align: center;
+    color: white;
+}
+
