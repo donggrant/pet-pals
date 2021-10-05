@@ -27,7 +27,7 @@ table {
 
 body {
 	color: white;
-	background-color: rgb(141, 141, 141);
+	background-color: rgb(95, 218, 255);
 	font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
@@ -48,7 +48,7 @@ a:hover {
 }
 
 header, footer {
-	background-color: rgb(43, 43, 43);
+	background-color: #138dff;
 	text-align: center;
 	padding: 1%;
 }

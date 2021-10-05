@@ -12,6 +12,7 @@
     padding: 10px 10px;    
     width: 45%; 
     min-height: 700px;
+    border-radius: 3%;
 }
 
 .biography-text { 

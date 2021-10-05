@@ -27,7 +27,7 @@
                 <a href="adopterSearch.html"><h4>Adopters</h4></a>
                 <a href="breederSearch.html"><h4>Breeders</h4></a>
                 <a href="chat.html"><h4>My Chats</h4></a>
-                <a href="profile.html"><h4>My Profile</h4></a>
+                <a href="profile.php"><h4>My Profile</h4></a>
                 <a href="index.html"><h4>Sign Out</h4></a>
 			</nav>
 		</header>
