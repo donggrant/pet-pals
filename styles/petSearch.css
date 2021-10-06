@@ -2,13 +2,13 @@ body {
     color: black;
 }
 
-section.filters {
+div.filters {
     background-color: rgb(255, 180, 17);
     display: flex;
     justify-content: space-evenly;
 }
 
-section.filters button {
+div.filters button {
     margin: 1%;
     min-width: 8%;
 }

@@ -20,7 +20,7 @@
 	<body class="profile">
 		<header>
 			<nav>
-                <img src="images/pet-pals-icon.png"/>
+                <img src="images/pet-pals-icon.png" alt="pet pal icon"/>
                 <a href="petSearch.html"><h4>Find a Pet</h4></a>
                 <a href="adopterSearch.html"><h4>Adopters</h4></a>
                 <a href="breederSearch.html"><h4>Breeders</h4></a>
@@ -31,7 +31,7 @@
 		</header>
         <section> 
             <div class = "profile-info-group">
-                <img class="profile-icon" src="images/profile-icon.png"> 
+            <img class="profile-icon" src="images/profile-icon.png" alt="profile icon"> 
                 <div class = "biography-text" >
                     <div class ="profile-name">
                         <h2><?php echo $_POST["name"]; ?></h2> 
@@ -57,7 +57,7 @@
             </div>
         </section>
 		<footer> 
-			<small>Copyright © 2021 Grant Dong and Hunter Vaccaro. All Rights Reserved</small>
+        <small>Copyright &copy; 2021 Grant Dong and Hunter Vaccaro. All Rights Reserved</small>
 		</footer>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 	</body>
