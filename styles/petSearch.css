@@ -1,4 +1,26 @@
-section.results {
+body {
+    color: black;
+}
+
+section.filters {
+    background-color: rgb(255, 180, 17);
+    display: flex;
+    justify-content: space-evenly;
+}
+
+section.filters button {
+    margin: 1%;
+    min-width: 8%;
+}
+
+div.card {
+    margin: 5%;
+}
+
+img.card-img-top { 
+    max-height: 200px;
+    min-height: 200px;
+    object-fit: cover;
 }
 
 p.card-text {
