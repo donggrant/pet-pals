@@ -1,0 +1,32 @@
+form {
+    margin-left: 20%;
+    margin-right: 20%;
+    width: auto;
+}
+
+form div {
+    margin-top: 5%;
+    margin-bottom: 5%
+}
+
+form div label, input {
+    margin: 1%;
+}
+
+form {
+    text-align: center;
+}
+
+form button {
+	background-color:rgb(255, 180, 17);
+    border: 0px;
+	border-radius: 10% / 50%;
+	padding: 4%;
+    margin: 2%;
+    color: white;
+    font-size: 30px;
+}
+
+form label {
+    font-size: 25px;
+}
