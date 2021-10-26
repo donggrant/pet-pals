@@ -96,11 +96,7 @@ if (isset($_POST["email"])) { // validate the email coming in
 			</nav>
 		</header>
         <a class="btn btn-primary" href="index.html"><h4>Back</h4></a>
-<<<<<<< HEAD
         <form action="registration.php" method="post">
-=======
-        <form action="profile.php" method="post">
->>>>>>> 9f15f5380e3168d368aa2443bafb9267227bda39
             <div class="form-group">
                 <label>Name:</label>
                 <input type="text" class="form-control" id="name" name="name">
