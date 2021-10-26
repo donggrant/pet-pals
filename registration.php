@@ -6,59 +6,78 @@ include("credentials.php"); // define variables
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 $mysqli = new mysqli($host, $username, $password, $dbname); 
 // $db = new mysql("localhost", "root", "", "dbname"); // XAMPP Settings 
-$error_msg = "";
+$errorMessage = "";
 
 session_start();
 
 // Check if the user submitted the form (the form in the HTML below
 // submits back to this page, which is okay for now.  We will check for
 // form data and determine whether to re-show this form with a message
-// or to redirect the user to the trivia game.
+// or to redirect the user to the trivia game. 
 if (isset($_POST["email"])) { // validate the email coming in
-    $stmt = $mysqli->prepare("SELECT * FROM users natural join adopter WHERE email = ?;");
-    $stmt->bind_param("s", $_POST["email"]);
-    if (!$stmt->execute()) {
-        $error_msg = "Error checking for user";
-    } else { 
-        // result succeeded
-        $res = $stmt->get_result();
-        $data = $res->fetch_all(MYSQLI_ASSOC);
-        $hash = password_hash($_POST["password"], PASSWORD_DEFAULT);
+    if($_POST["habits"] === "" || $_POST["hobbies"] === "" || $_POST["name"] === "" || $_POST["aboutMe"] === "") {
+        $errorMessage="<div class = 'alert alert-danger'>Please provide all your information.</div>"; 
+    }  
+    else { 
+            $standard_regex = "/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*#?&^_-]{8,}$/";  
+            if(preg_match($standard_regex, $_POST["password"], $match) && $match[0] === $_POST["password"]) { 
+                $stmt = $mysqli->prepare("SELECT * FROM users natural join adopter WHERE email = ?;");
+                $stmt->bind_param("s", $_POST["email"]);
+                if (!$stmt->execute()) {
+                    $errorMessage = "<div class = 'alert alert-danger'>Error checking for user</div>";
+                } else { 
+                    // result succeeded
+                    $res = $stmt->get_result();
+                    $data = $res->fetch_all(MYSQLI_ASSOC);
+                    $hash = password_hash($_POST["password"], PASSWORD_DEFAULT);
 
-        if (empty($data)) { 
-            // User was not found.  For our game, we'll just insert them!
-            $insert = $mysqli->prepare("insert into users (name, email, password) values (?, ?, ?);");
-            $insert->bind_param("sss", $_POST["name"], $_POST["email"], $hash);
-            if (!$insert->execute()) {
-                $error_msg = "Error creating new user";
-            } 
+                    if (empty($data)) { 
+                        // User was not found.  For our game, we'll just insert them!
+                        $insert = $mysqli->prepare("insert into users (name, email, password) values (?, ?, ?);");
+                        $insert->bind_param("sss", $_POST["name"], $_POST["email"], $hash);
+                        if (!$insert->execute()) {
+                            $errorMessage = "<div class = 'alert alert-danger'>Error creating new user</div>";
+                        } 
 
-            // insert into adopter's profile
-            $insert = $mysqli->prepare("insert into adopter (aboutMe, hobbies, habits, userID) values (?, ?, ?, (SELECT userID FROM users WHERE users.email = ?));");
-            $insert->bind_param("ssss", $_POST["aboutMe"], $_POST["hobbies"], $_POST["habits"], $_POST["email"]);
-            if (!$insert->execute()) {
-                $error_msg = "Error creating new user";
-            } 
-        } else if(!password_verify($_POST["password"], $data[0]["password"])) {
-            header("Location: signIn.php");
-            exit();
+                        // insert into adopter's profile
+                        $insert = $mysqli->prepare("insert into adopter (aboutMe, hobbies, habits, userID) values (?, ?, ?, (SELECT userID FROM users WHERE users.email = ?));");
+                        $insert->bind_param("ssss", $_POST["aboutMe"], $_POST["hobbies"], $_POST["habits"], $_POST["email"]);
+                        if (!$insert->execute()) {
+                            $errorMessage = "<div class = 'alert alert-danger'>Error creating new user</div>";
+                        } 
+                    } else if(!password_verify($_POST["password"], $data[0]["password"])) {
+                        header("Location: signIn.php");
+                        exit();
+                    }
+
+                    $stmt = $mysqli->prepare("SELECT * FROM users natural join adopter WHERE email = ?;");
+                    $stmt->bind_param("s", $_POST["email"]);
+                    if (!$stmt->execute()) {
+                        $errorMessage = "<div class = 'alert alert-danger'>Error checking for user</div>";
+                    } else { 
+                        $res = $stmt->get_result();
+                        $data = $res->fetch_all(MYSQLI_ASSOC);
+                        // Send them to the game (with a GET parameter containing their email)   
+                        $_SESSION["name"] = $data[0]["name"];
+                        $_SESSION["email"] = $data[0]["email"];
+                        $_SESSION["userID"] = $data[0]["userID"];
+                        header("Location: profile.php");
+                        exit();
+                    }
+                }
+            } else {
+                $errorMessage = "<div class = 'alert alert-danger'>
+                    Password must contain: \n
+                    <ul>
+                        <li>at least 8 characters</li>
+                        <li>at least 1 upper-case letter</li>
+                        <li>at least 1 lower-case letter</li>
+                        <li>at least 1 special character letter</li>
+                        <li>no spaces</li>
+                    </ul> </div>";  
+            }
         }
 
-        $stmt = $mysqli->prepare("SELECT * FROM users natural join adopter WHERE email = ?;");
-        $stmt->bind_param("s", $_POST["email"]);
-        if (!$stmt->execute()) {
-            $error_msg = "Error checking for user";
-        } else { 
-            $res = $stmt->get_result();
-            $data = $res->fetch_all(MYSQLI_ASSOC);
-            // Send them to the game (with a GET parameter containing their email)   
-            $_SESSION["name"] = $data[0]["name"];
-            $_SESSION["email"] = $data[0]["email"];
-            $_SESSION["userID"] = $data[0]["userID"];
-            header("Location: profile.php");
-            exit();
-        }
-    }
 }  
 
 ?>
@@ -94,6 +113,7 @@ if (isset($_POST["email"])) { // validate the email coming in
 		</header>
         <a class="btn btn-primary" href="index.html"><h4>Back</h4></a>
         <form action="registration.php" method="post">
+            <?=$errorMessage?>
             <div class="form-group">
                 <label>Name:</label>
                 <input type="text" class="form-control" id="name" name="name">
