@@ -96,7 +96,11 @@ if (isset($_POST["email"])) { // validate the email coming in
 			</nav>
 		</header>
         <a class="btn btn-primary" href="index.html"><h4>Back</h4></a>
+<<<<<<< HEAD
         <form action="registration.php" method="post">
+=======
+        <form action="profile.php" method="post">
+>>>>>>> 9f15f5380e3168d368aa2443bafb9267227bda39
             <div class="form-group">
                 <label>Name:</label>
                 <input type="text" class="form-control" id="name" name="name">
@@ -107,11 +111,19 @@ if (isset($_POST["email"])) { // validate the email coming in
             </div>       
             <div class="form-group">
                 <label>Hobbies and Lifestyle:</label>
+<<<<<<< HEAD
                 <textarea class="form-control" id="lifestyle" name="hobbies"></textarea>
             </div>      
             <div class="form-group">
                 <label>Habits and Experience:</label>
                 <textArea class="form-control" id="experience" name="habits"></textArea>
+=======
+                <textarea class="form-control" id="lifestyle" name="lifestyle"></textarea>
+            </div>      
+            <div class="form-group">
+                <label>Habits and Experience:</label>
+                <textArea class="form-control" id="experience" name="experience"></textArea>
+>>>>>>> 9f15f5380e3168d368aa2443bafb9267227bda39
             </div>   
             <div class="form-group">
                 <label>Email address:</label>

@@ -1,3 +1,47 @@
+<?php
+    include("credentials.php");
+     
+    /** SETUP **/
+    mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+    $mysqli = new mysqli($host, $username, $password, $dbname); 
+    // $db = new mysql("localhost", "root", "", "dbname"); // XAMPP Settings 
+    $error_msg = ""; 
+
+    session_start();
+
+    if(isset($_POST["email"])) {
+        $stmt = $mysqli->prepare("select * from users where email = ?;");
+        $stmt->bind_param("s", $_POST["email"]);
+        
+        if (!$stmt->execute()) {
+            $error_msg = "Error checking for user";
+        } else { 
+            // result succeeded
+            $res = $stmt->get_result();
+            $data = $res->fetch_all(MYSQLI_ASSOC); 
+ 
+            if (empty($data)) { 
+                // User was not found
+                header("Location: registration.php");
+                exit();
+            } 
+            
+            $user_info = $data[0]; 
+            if(!password_verify($_POST["password"], $user_info["password"])) { 
+                //invalid password 
+                header("Location: signIn.php");
+                exit();
+            }
+              
+            $_SESSION["userID"] = $user_info["userID"]; 
+            $_SESSION["name"] = $user_info["name"]; 
+            $_SESSION["email"] = $user_info["email"];  
+            header("Location: profile.php");
+            exit();
+    } 
+}  
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -28,7 +72,8 @@
 			</nav>
 		</header>
         <a class="btn btn-primary" href="index.html"><h4>Back</h4></a>
-        <form action="profile.php" method="post">
+        <form action="signIn.php" method="post">
+            <div><?=$error_msg?></div>
             <div class="form-group">
                 <label>Email:</label>
                 <input type="email" class="form-control" id="email" name="email">
