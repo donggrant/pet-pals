@@ -1,4 +1,57 @@
- <!DOCTYPE html>
+<?php
+/** DATABASE SETUP **/
+include("credentials.php"); // define variables
+
+/** SETUP **/
+mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+$mysqli = new mysqli($host, $username, $password, $dbname);
+// $db = new mysql("localhost", "root", "", "dbname"); // XAMPP Settings
+$user = null;
+
+session_start();
+// Example using URL rewriting: we add the user information
+// directly to the URI with a query string (GET parameters)
+
+// Deal with the current session 
+if (isset($_SESSION["email"])) { // validate the email coming in
+    $stmt = $mysqli->prepare("SELECT * FROM users natural join adopter WHERE email = ?;");
+    $stmt->bind_param("s", $_SESSION["email"]);
+    if (!$stmt->execute()) {
+        die("Error checking for user");
+    } else { 
+        // result succeeded
+        $res = $stmt->get_result();
+        $data = $res->fetch_all(MYSQLI_ASSOC);
+        
+        if (empty($data)) {
+            // user was NOT found!
+            header("Location: index.html");
+            exit();
+        } 
+        // The user WAS found (SECURITY ALERT: we only checked against
+        // their email address -- this is not a secure method of
+        // keeping track of users!  We more likely want a unique
+        // session ID for this user instead!
+        $user = $data[0];
+        if(!isset($_SESSION["name"])) { 
+            $_SESSION["name"] = $data[0]["name"];
+            $_SESSION["email"] = $data[0]["email"];
+            $_SESSION["aboutMe"] = $data[0]["aboutMe"];  
+            $_SESSION["hobbies"] = $data[0]["hobbies"];
+            $_SESSION["habits"] = $data[0]["habits"];
+        } 
+    }
+} else {
+    // User did not supply email GET parameter, so send them
+    // to the login page
+    //header("Location: index.html");
+    echo "HERE";
+    exit();
+}
+
+?>
+
+<!DOCTYPE html>
 <html lang="en">
 	<head>
 		<title>Pet Pals - Profile</title>
@@ -34,12 +87,12 @@
             <img class="profile-icon" src="images/profile-icon.png" alt="profile icon"> 
                 <div class = "biography-text" >
                     <div class ="profile-name">
-                        <h2><?php echo $_POST["name"]; ?></h2> 
+                        <h2><?php echo $_SESSION["name"]; ?></h2> 
                     </div>
                     <div class = "profile-about">  
                         <h3>About Me</h3>   
                         <br>
-                        <h5><?php echo $_POST["aboutMe"]; ?></h5> 
+                        <h5><?php echo $_SESSION["aboutMe"]; ?></h5> 
                     </div>
                 </div> 
             </div>
@@ -47,12 +100,12 @@
                 <div class = "profile-hobbies">
                     <h3>Hobbies &amp; Lifestyle</h3> 
                     <br>
-                    <h5><?php echo $_POST["lifestyle"]; ?></h5>
+                    <h5><?php echo $_SESSION["hobbies"]; ?></h5>
                 </div>
                 <div class = "profile-experience">
                     <h3>Habits &amp; Experience</h3> 
                     <br>
-                    <h5><?php echo $_POST["experience"]; ?></h5>
+                    <h5><?php echo $_SESSION["habits"]; ?></h5>
                 </div>
             </div>
         </section>
