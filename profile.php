@@ -33,13 +33,11 @@ if (isset($_SESSION["email"])) { // validate the email coming in
         // keeping track of users!  We more likely want a unique
         // session ID for this user instead!
         $user = $data[0];
-        if(!isset($_SESSION["name"])) { 
-            $_SESSION["name"] = $data[0]["name"];
-            $_SESSION["email"] = $data[0]["email"];
-            $_SESSION["aboutMe"] = $data[0]["aboutMe"];  
-            $_SESSION["hobbies"] = $data[0]["hobbies"];
-            $_SESSION["habits"] = $data[0]["habits"];
-        } 
+        $_SESSION["name"] = $data[0]["name"];
+        $_SESSION["email"] = $data[0]["email"];
+        $_SESSION["aboutMe"] = $data[0]["aboutMe"];  
+        $_SESSION["hobbies"] = $data[0]["hobbies"];
+        $_SESSION["habits"] = $data[0]["habits"];
     }
 } else {
     // User did not supply email GET parameter, so send them

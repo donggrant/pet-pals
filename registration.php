@@ -60,9 +60,6 @@ if (isset($_POST["email"])) { // validate the email coming in
                         // Send them to the game (with a GET parameter containing their email)   
                         $_SESSION["name"] = $data[0]["name"];
                         $_SESSION["email"] = $data[0]["email"];
-                        $_SESSION["aboutMe"] = $data[0]["aboutMe"];  
-                        $_SESSION["hobbies"] = $data[0]["hobbies"];
-                        $_SESSION["habits"] = $data[0]["habits"];
                         header("Location: profile.php");
                         exit();
                     }
