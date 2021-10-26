@@ -39,11 +39,28 @@ if (isset($_SESSION["email"])) { // validate the email coming in
         $_SESSION["hobbies"] = $data[0]["hobbies"];
         $_SESSION["habits"] = $data[0]["habits"];
     }
+
+    if(isset($_GET["petID"])){
+        $insert = $mysqli->prepare("insert into pet2user (petID, userID) values (?, ?);");
+        $insert->bind_param("ii", $_GET["petID"], $_SESSION["userID"]);
+        if (!$insert->execute()) {
+            $error_msg = "Error adding pet to pet2user";
+        } 
+        header("Location: profile.php");
+    }
+
+    $stmt = $mysqli->prepare("SELECT * FROM pets NATURAL JOIN pet2user WHERE userID = ?;");
+    $stmt->bind_param("i", $_SESSION["userID"]);
+    if (!$stmt->execute()) {
+        $error_msg = "Error finding favorite pets for user";
+    } 
+    $res = $stmt->get_result();
+    $pets = $res->fetch_all(MYSQLI_ASSOC);
+    
 } else {
     // User did not supply email GET parameter, so send them
     // to the login page
-    //header("Location: index.html");
-    echo "HERE";
+    header("Location: index.html");
     exit();
 }
 
@@ -72,7 +89,7 @@ if (isset($_SESSION["email"])) { // validate the email coming in
 		<header>
 			<nav>
                 <img src="images/pet-pals-icon.png" alt="pet pal icon"/>
-                <a href="petSearch.html"><h4>Find a Pet</h4></a>
+                <a href="petSearch.php"><h4>Find a Pet</h4></a>
                 <a href="adopterSearch.html"><h4>Adopters</h4></a>
                 <a href="breederSearch.html"><h4>Breeders</h4></a>
                 <a href="chat.html"><h4>My Chats</h4></a>
@@ -107,6 +124,24 @@ if (isset($_SESSION["email"])) { // validate the email coming in
                 </div>
             </div>
         </section>
+        <section class="favorites">
+            <h1>Favorite Pets</h1>
+		    <div class="container">
+                <div class="row row-cols-sm-2 row-cols-md-3 row-cols-lg-5">
+                    <?php foreach($pets as $pet){ ?>
+                        <div class="col">
+                        <div class="card text-center">
+                            <img class="card-img-top" src="<?= $pet["picture"]?>" alt="Clifford">
+                            <div class="card-body">
+                            <h5 class="card-title"><?= $pet["name"]?> (<?= $pet["species"]?>)</h5>
+                            <a href="profile.php?petID=<?= $pet["petID"]?>" class="btn btn-primary">Favorite</a>
+                            </div>
+                        </div>
+                        </div>
+                    <?php } ?>
+                </div>
+            </div>  
+		</section>
 		<footer> 
         <small>Copyright &copy; 2021 Grant Dong and Hunter Vaccaro. All Rights Reserved</small>
 		</footer>

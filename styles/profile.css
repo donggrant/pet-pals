@@ -48,4 +48,23 @@
     width: 250px;
     height: 250px; 
 }
+
+div.filters button {
+    margin: 1%;
+    min-width: 8%;
+}
+
+div.card {
+    margin: 5%;
+}
+
+img.card-img-top { 
+    max-height: 200px;
+    min-height: 200px;
+    object-fit: cover;
+}
+
+p.card-text {
+    color: black;
+}
  
