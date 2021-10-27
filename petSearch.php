@@ -64,7 +64,7 @@ if (isset($_SESSION["email"])) { // validate the email coming in
                 <a href="petSearch.php"><h4>Find a Pet</h4></a>
                 <a href="profile.php"><h4>Adopters</h4></a>
                 <a href="profile.php"><h4>Breeders</h4></a>
-                <a href="chat.html"><h4>My Chats</h4></a>
+                <a href="chat.php"><h4>My Chats</h4></a>
                 <a href="profile.php"><h4>My Profile</h4></a>
                 <a href="signOut.php"><h4>Sign Out</h4></a>
 			</nav>
