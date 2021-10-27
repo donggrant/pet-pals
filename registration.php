@@ -106,8 +106,8 @@ if (isset($_POST["email"])) { // validate the email coming in
 			<nav>
                 <img src="images/pet-pals-icon.png" alt="Pet Pals Icon"/>
                 <a href="petSearch.php"><h4>Find a Pet</h4></a>
-                <a href="adopterSearch.html"><h4>Adopters</h4></a>
-                <a href="breederSearch.html"><h4>Breeders</h4></a>
+                <a href="profile.php"><h4>Adopters</h4></a>
+                <a href="profile.php"><h4>Breeders</h4></a>
                 <a href="chat.html"><h4>My Chats</h4></a>
 			</nav>
 		</header>

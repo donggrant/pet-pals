@@ -1,3 +1,26 @@
+<?php 
+/** DATABASE SETUP **/
+include("credentials.php"); // define variables
+
+/** SETUP **/
+mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+$mysqli = new mysqli($host, $username, $password, $dbname);
+// $db = new mysql("localhost", "root", "", "dbname"); // XAMPP Settings
+$user = null;
+
+session_start();
+// Example using URL rewriting: we add the user information
+// directly to the URI with a query string (GET parameters)
+
+// Deal with the current session 
+if (isset($_SESSION["email"])) { // validate the email coming in
+}
+else {
+    header("Location: index.html");
+    exit();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -24,9 +47,9 @@
                 <a href="petSearch.php"><h4>Find a Pet</h4></a>
                 <a href="profile.php"><h4>Adopters</h4></a>
                 <a href="profile.php"><h4>Breeders</h4></a>
-                <a href="chat.html"><h4>My Chats</h4></a>
+                <a href="chat.php"><h4>My Chats</h4></a>
                 <a href="profile.php"><h4>My Profile</h4></a>
-                <a href="index.html"><h4>Sign Out</h4></a>
+                <a href="signOut.php"><h4>Sign Out</h4></a>
 			</nav>
 		</header>
         <h1 style="margin-bottom: 50%; margin-top:10%;">Chats</h1>

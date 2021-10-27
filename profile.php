@@ -90,11 +90,11 @@ if (isset($_SESSION["email"])) { // validate the email coming in
 			<nav>
                 <img src="images/pet-pals-icon.png" alt="pet pal icon"/>
                 <a href="petSearch.php"><h4>Find a Pet</h4></a>
-                <a href="adopterSearch.html"><h4>Adopters</h4></a>
-                <a href="breederSearch.html"><h4>Breeders</h4></a>
+                <a href="profile.php"><h4>Adopters</h4></a>
+                <a href="profile.php"><h4>Breeders</h4></a>
                 <a href="chat.html"><h4>My Chats</h4></a>
                 <a href="profile.php"><h4>My Profile</h4></a>
-                <a href="index.html"><h4>Sign Out</h4></a>
+                <a href="signOut.php"><h4>Sign Out</h4></a>
 			</nav>
 		</header>
         <section> 
@@ -125,7 +125,8 @@ if (isset($_SESSION["email"])) { // validate the email coming in
             </div>
         </section>
         <section class="favorites">
-            <h1>Favorite Pets</h1>
+            <h1><a href="favoriteStatistics.php">Favorite Pets</a></h1>
+
 		    <div class="container">
                 <div class="row row-cols-sm-2 row-cols-md-3 row-cols-lg-5">
                     <?php foreach($pets as $pet){ ?>
@@ -134,7 +135,7 @@ if (isset($_SESSION["email"])) { // validate the email coming in
                             <img class="card-img-top" src="<?= $pet["picture"]?>" alt="Clifford">
                             <div class="card-body">
                             <h5 class="card-title"><?= $pet["name"]?> (<?= $pet["species"]?>)</h5>
-                            <a href="profile.php?petID=<?= $pet["petID"]?>" class="btn btn-primary">Favorite</a>
+                            <a href="removeFavorite.php?petID=<?= $pet["petID"]?>" class="btn btn-primary">Unfavorite</a>
                             </div>
                         </div>
                         </div>
