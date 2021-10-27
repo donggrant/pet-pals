@@ -45,10 +45,8 @@
             $errorMessage = "<div class='alert alert-danger'>
                                 Password must contain: \n
                                 <ul>
-                                    <li>at least 8 characters</li>
-                                    <li>at least 1 upper-case letter</li>
-                                    <li>at least 1 lower-case letter</li>
-                                    <li>at least 1 special character letter</li>
+                                    <li>at least 8 characters</li>   
+                                    <li>at least 1 number</li>
                                     <li>no spaces</li>
                                 </ul>
                             </div>";
