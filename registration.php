@@ -105,12 +105,12 @@ if (isset($_POST["email"])) { // validate the email coming in
                 <img src="images/pet-pals-icon.png" alt="Pet Pals Icon"/>
                 <a href="petSearch.php"><h4>Find a Pet</h4></a>
                 <a href="profile.php"><h4>Adopters</h4></a>
-                <a href="profile.php"><h4>Owners</h4></a>
+                <a href="profile.php"><h4>Breeders</h4></a>
                 <a href="chat.php"><h4>My Chats</h4></a>
 			</nav>
 		</header>
         <a class="btn btn-primary" href="index.html"><h4>Back</h4></a>
-        <form action="ownerRegistration.php" method="post">
+        <form action="registration.php" method="post">
             <?=$errorMessage?>
             <div class="form-group">
                 <label>Name:</label>

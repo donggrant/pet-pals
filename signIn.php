@@ -79,7 +79,7 @@
                 <img src="images/pet-pals-icon.png" alt="Pet Pals Icon"/>
                 <a href="petSearch.php"><h4>Find a Pet</h4></a>
                 <a href="profile.php"><h4>Adopters</h4></a>
-                <a href="profile.php"><h4>Owners</h4></a> 
+                <a href="profile.php"><h4>Breeders</h4></a> 
 			</nav>
 		</header>
         <a class="btn btn-primary" href="index.html"><h4>Back</h4></a>
