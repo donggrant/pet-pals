@@ -14,64 +14,64 @@ session_start();
 // submits back to this page, which is okay for now.  We will check for
 // form data and determine whether to re-show this form with a message
 // or to redirect the user to the trivia game. 
-if (isset($_POST["email"])) { // validate the email coming in
-    if($_POST["habits"] === "" || $_POST["hobbies"] === "" || $_POST["name"] === "" || $_POST["aboutMe"] === "") {
+if (isset($_SESSION["email"])) { // validate the email coming in
+    $stmt = $mysqli->prepare("SELECT * FROM users WHERE email = ?;");
+    $stmt->bind_param("s", $_SESSION["email"]);
+    if (!$stmt->execute()) {
+        die("Error checking for user");
+    } else { 
+        // result succeeded
+        $res = $stmt->get_result();
+        $data = $res->fetch_all(MYSQLI_ASSOC);
+        
+        if (empty($data)) {
+            // user was NOT found!
+            header("Location: index.html");
+            exit();
+        } 
+        // The user WAS found (SECURITY ALERT: we only checked against
+        // their email address -- this is not a secure method of
+        // keeping track of users!  We more likely want a unique
+        // session ID for this user instead!
+        $user = $data[0];
+        $_SESSION["name"] = $data[0]["name"];
+        $_SESSION["email"] = $data[0]["email"];
+        $_SESSION["aboutMe"] = $data[0]["aboutMe"];  
+        $_SESSION["hobbies"] = $data[0]["hobbies"];
+        $_SESSION["habits"] = $data[0]["habits"];
+        $_SESSION["type"] = $data[0]["type"];
+        $_SESSION["userID"] = $data[0]["userID"];
+    }
+
+    if($_POST["name"] === "" || $_POST["species"] === "" || !isset($_POST["age"]) || !isset($_POST["size"]) || !isset($_POST["weight"]) || $_POST["personality"] === "") {
         $errorMessage="<div class = 'alert alert-danger'>Please provide all your information.</div>"; 
-    }  
-    else { 
-            $standard_regex = "/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*#?&^_-]{8,}$/";  
-            if(preg_match($standard_regex, $_POST["password"], $match) && $match[0] === $_POST["password"]) { 
-                $stmt = $mysqli->prepare("SELECT * FROM users WHERE email = ?;");
-                $stmt->bind_param("s", $_POST["email"]);
-                if (!$stmt->execute()) {
-                    $errorMessage = "<div class = 'alert alert-danger'>Error checking for user</div>";
-                } else { 
-                    // result succeeded
-                    $res = $stmt->get_result();
-                    $data = $res->fetch_all(MYSQLI_ASSOC);
-                    $hash = password_hash($_POST["password"], PASSWORD_DEFAULT);
-
-                    if (empty($data)) { 
-                        // User was not found.  For our game, we'll just insert them!
-                        $insert = $mysqli->prepare("insert into users (name, email, password, type, aboutMe, hobbies, habits) values (?, ?, ?, ?, ?, ?, ?);");
-                        $insert->bind_param("sssssss", $_POST["name"], $_POST["email"], $hash, $_POST["type"], $_POST["aboutMe"], $_POST["hobbies"], $_POST["habits"]);
-                        if (!$insert->execute()) {
-                            $errorMessage = "<div class = 'alert alert-danger'>Error creating new user</div>";
-                        } 
-
-                    } else if(!password_verify($_POST["password"], $data[0]["password"])) {
-                        header("Location: signIn.php");
-                        exit();
-                    }
-
-                    $stmt = $mysqli->prepare("SELECT * FROM users WHERE email = ?;");
-                    $stmt->bind_param("s", $_POST["email"]);
-                    if (!$stmt->execute()) {
-                        $errorMessage = "<div class = 'alert alert-danger'>Error checking for user</div>";
-                    } else { 
-                        $res = $stmt->get_result();
-                        $data = $res->fetch_all(MYSQLI_ASSOC);
-                        // Send them to the game (with a GET parameter containing their email)   
-                        $_SESSION["name"] = $data[0]["name"];
-                        $_SESSION["email"] = $data[0]["email"];
-                        $_SESSION["userID"] = $data[0]["userID"];
-                        $_SESSION["type"] = $data[0]["type"];
-                        header("Location: profile.php");
-                        exit();
-                    }
-                }
-            } else {
-                $errorMessage = "<div class = 'alert alert-danger'>
-                    Password must contain: \n
-                    <ul>
-                    <li>at least 8 characters</li>   
-                    <li>at least 1 number</li>
-                    <li>no spaces</li>
-                    </ul> </div>";  
-            }
+    } else { 
+        // User was not found.  For our game, we'll just insert them!
+        $insert = $mysqli->prepare("insert into pets (name, species, age, size, weight, personality) values (?, ?, ?, ?, ?, ?);");
+        $insert->bind_param("ssssss", $_POST["name"], $_POST["species"], $_POST["age"], $_POST["size"], $_POST["weight"], $_POST["personality"]);
+        if (!$insert->execute()) {
+            $errorMessage = "<div class = 'alert alert-danger'>Error creating new user</div>";
         }
 
-}  
+        $pet_id = $insert->insert_id;
+    
+        $insert = $mysqli->prepare("insert into pet2user (userID, petID) values (?, ?);");
+        $insert->bind_param("ii", $_SESSION["userID"], $pet_id);
+        if (!$insert->execute()) {
+            $errorMessage = "<div class = 'alert alert-danger'>Error creating new user</div>";
+        }
+
+        header("Location: profile.php");
+        exit();
+    }
+    
+} else {
+    // User did not supply email GET parameter, so send them
+    // to the login page
+    header("Location: index.html");
+    exit();
+} 
+
 
 ?>
 
@@ -121,11 +121,15 @@ if (isset($_POST["email"])) { // validate the email coming in
             </div>      
             <div class="form-group">
                 <label>Age:</label>
-                <input class="form-control" type="number" id="species" name="species"></input>
+                <input class="form-control" type="number" id="age" name="age"></input>
+            </div> 
+            <div class="form-group">
+                <label>Size:</label>
+                <input class="form-control" type="number" id="size" name="size"></input>
             </div> 
             <div class="form-group">
                 <label>Weight:</label>
-                <input class="form-control" type="number" id="species" name="species"></input>
+                <input class="form-control" type="number" id="weight" name="weight"></input>
             </div> 
             <div class="form-group">
                 <p>Sex:</p>
