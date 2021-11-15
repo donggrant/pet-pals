@@ -14,7 +14,7 @@ session_start();
 
 // Deal with the current session 
 if (isset($_SESSION["email"])) { // validate the email coming in
-    $stmt = $mysqli->prepare("SELECT * FROM users natural join adopter WHERE email = ?;");
+    $stmt = $mysqli->prepare("SELECT * FROM users WHERE email = ?;");
     $stmt->bind_param("s", $_SESSION["email"]);
     if (!$stmt->execute()) {
         die("Error checking for user");
@@ -38,6 +38,7 @@ if (isset($_SESSION["email"])) { // validate the email coming in
         $_SESSION["aboutMe"] = $data[0]["aboutMe"];  
         $_SESSION["hobbies"] = $data[0]["hobbies"];
         $_SESSION["habits"] = $data[0]["habits"];
+        $_SESSION["type"] = $data[0]["type"];
     }
 
     if(isset($_GET["petID"])){
@@ -91,7 +92,7 @@ if (isset($_SESSION["email"])) { // validate the email coming in
                 <img src="images/pet-pals-icon.png" alt="pet pal icon"/>
                 <a href="petSearch.php"><h4>Find a Pet</h4></a>
                 <a href="profile.php"><h4>Adopters</h4></a>
-                <a href="profile.php"><h4>Breeders</h4></a>
+                <a href="profile.php"><h4>Owners</h4></a>
                 <a href="chat.php"><h4>My Chats</h4></a>
                 <a href="profile.php"><h4>My Profile</h4></a>
                 <a href="signOut.php"><h4>Sign Out</h4></a>
@@ -125,8 +126,12 @@ if (isset($_SESSION["email"])) { // validate the email coming in
             </div>
         </section>
         <section class="favorites">
+            <?php if($_SESSION["type"] == "adopter"){?>
             <h1><a href="favoriteStatistics.php">Favorite Pets</a></h1>
-
+            <?php } else { ?>
+            <h1><a href="favoriteStatistics.php">Your Pets</a></h1>
+            <a href="addPet.php" class="btn btn-success">Register a New Pet</a>
+            <?php } ?>
 		    <div class="container">
                 <div class="row row-cols-sm-2 row-cols-md-3 row-cols-lg-5">
                     <?php foreach($pets as $pet){ ?>

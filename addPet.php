@@ -104,40 +104,36 @@ if (isset($_POST["email"])) { // validate the email coming in
                 <a href="chat.php"><h4>My Chats</h4></a>
 			</nav>
 		</header>
-        <a class="btn btn-primary" href="index.html"><h4>Back</h4></a>
-        <form action="registration.php" method="post">
+        <a class="btn btn-primary" href="profile.php"><h4>Back</h4></a>
+        <form action="addPet.php" method="post">
             <?=$errorMessage?>
             <div class="form-group">
                 <label>Name:</label>
                 <input type="text" class="form-control" id="name" name="name">
             </div>   
             <div class="form-group">
-                    <p>Who are you?</p>
-                    <select multiple class="form-control" id="type" name="type">
-                        <option value="adopter" selected>An adopter. I'm looking for pets.</option>
-                        <option value="owner">An owner. I'm giving away pets</option>
-                    </select>
-                </div> 
-            <div class="form-group">
-                <label>About Me:</label>
-                <textarea class="form-control" id="aboutMe" name="aboutMe"></textarea>
+                <label>Personality:</label>
+                <textarea class="form-control" id="personality" name="personality"></textarea>
             </div>       
             <div class="form-group">
-                <label>Hobbies and Lifestyle:</label>
-                <textarea class="form-control" id="lifestyle" name="hobbies"></textarea>
+                <label>Species:</label>
+                <input class="form-control" id="species" name="species"></input>
             </div>      
             <div class="form-group">
-                <label>Habits and Experience:</label>
-                <textArea class="form-control" id="experience" name="habits"></textArea>
-            </div>   
+                <label>Age:</label>
+                <input class="form-control" type="number" id="species" name="species"></input>
+            </div> 
             <div class="form-group">
-                <label>Email address:</label>
-                <input type="email" class="form-control" id="email" name="email">
-            </div>
+                <label>Weight:</label>
+                <input class="form-control" type="number" id="species" name="species"></input>
+            </div> 
             <div class="form-group">
-                <label for="pwd">Password:</label>
-                <input type="password" class="form-control" id="pwd" name="password">
-            </div>
+                <p>Sex:</p>
+                <select multiple class="form-control" id="sex" name="sex">
+                    <option value="m" selected>Male</option>
+                    <option value="f">Female</option>
+                </select>
+            </div> 
             <div class="checkbox">
                 <label><input type="checkbox">I agree to the terms of service.</label>
             </div>
