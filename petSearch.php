@@ -73,16 +73,14 @@ if (isset($_SESSION["email"])) { // validate the email coming in
 		</header>
 		<div class="filters"> 
 			<button class="btn btn-primary">Species</button>
-			<button class="btn btn-primary">Price</button>
-			<button class="btn btn-primary">Age</button>
+			<button class="btn btn-primary" onclick="filterAge()">Age</button>
 			<button class="btn btn-primary">Sex</button>
-			<button class="btn btn-primary">Size</button>
-			<button class="btn btn-primary">Weight</button>
-			<button class="btn btn-primary">Maintenance</button>
+			<button class="btn btn-primary" onclick="filterSize()">Size</button>
+			<button class="btn btn-primary" onclick="filterWeight()">Weight</button>
 		</div>
 		<section class="results">
 			<div class="container">
-        <div class="row row-cols-sm-2 row-cols-md-3 row-cols-lg-5">
+        <div class="row row-cols-sm-2 row-cols-md-3 row-cols-lg-5" id="display">
           <?php foreach($pets as $pet){ ?>
             <div class="col">
               <div class="card text-center">
@@ -117,8 +115,64 @@ if (isset($_SESSION["email"])) { // validate the email coming in
 		<footer> 
 			<small>Copyright &copy; 2021 Grant Dong and Hunter Vaccaro. All Rights Reserved</small>
 		</footer>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-        <script type="text/javascript" src="filtering.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script>
+      function displayPets(petList, favoritedPets){
+        document.getElementById("display").innerHTML = "";
+        for (i = 0; i < petList.length; i++){
+          document.getElementById("display").innerHTML +=
+          "<div class='col'>" + 
+              "<div class='card text-center'>" +
+                "<img class='card-img-top' src='" + petList[i].picture + "' alt='" + petList[i].name + "'>" +
+                "<div class='card-body'>" +
+                  "<h5 class='card-title'>" + petList[i].name + "(" + petList[i].species + ")</h5>" +
+                  "<a href='profile.php?petID=" + petList[i].petID + "' class='btn btn-primary'>Favorite</a>" +
+                "</div>" +
+              "</div>" +
+            "</div>"
+        }
+        for (i = 0; i < favoritedPets.length; i++){
+          document.getElementById("display").innerHTML +=
+          "<div class='col'>" + 
+              "<div class='card text-center'>" +
+                "<img class='card-img-top' src='" + favoritedPets[i].picture + "' alt='" + favoritedPets[i].name + "'>" +
+                "<div class='card-body'>" +
+                  "<h5 class='card-title'>" + favoritedPets[i].name + "(" + favoritedPets[i].species + ")</h5>" +
+                  "<a href='profile.php?petID=" + favoritedPets[i].petID + "' class='btn btn-secondary'>Favorite</a>" +
+                "</div>" +
+              "</div>" +
+            "</div>";
+        }
+      }
+
+      function filterAge(){
+        var petList = <?php echo json_encode($pets); ?>;
+        var favoritedPets = <?php echo json_encode($favoritePets); ?>;
+        petList.sort((a, b) => (a.age > b.age) ? 1 : -1);
+        
+        // Refresh Pet List With New Ordering
+        displayPets(petList, favoritedPets);
+      }
+
+      function filterSize(){        
+        var petList = <?php echo json_encode($pets); ?>;
+        var favoritedPets = <?php echo json_encode($favoritePets); ?>;
+        petList.sort((a, b) => (a.size > b.size) ? 1 : -1);
+        
+        // Refresh Pet List With New Ordering
+        displayPets(petList, favoritedPets);
+      }
+
+      function filterWeight(){
+        var petList = <?php echo json_encode($pets); ?>;
+        var favoritedPets = <?php echo json_encode($favoritePets); ?>;
+        petList.sort((a, b) => (a.weight > b.weight) ? 1 : -1);
+        
+        // Refresh Pet List With New Ordering
+        displayPets(petList, favoritedPets);
+      }
+
+    </script>
 	</body>
 </html>
 
