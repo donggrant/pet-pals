@@ -127,9 +127,9 @@ if (isset($_SESSION["email"])) { // validate the email coming in
         </section>
         <section class="favorites">
             <?php if($_SESSION["type"] == "adopter"){?>
-            <h1><a href="favoriteStatistics.php">Favorite Pets</a></h1>
+            <h1><a href="petStats.php">Favorite Pets</a></h1>
             <?php } else { ?>
-            <h1><a href="favoriteStatistics.php">Your Pets</a></h1>
+            <h1><a href="petStats.php">Your Pets</a></h1>
             <a href="addPet.php" class="btn btn-success">Register a New Pet</a>
             <?php } ?>
 		    <div class="container">

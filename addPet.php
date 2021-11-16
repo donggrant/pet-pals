@@ -1,4 +1,6 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 'on');
 /** DATABASE SETUP **/
 include("credentials.php"); // define variables
 
@@ -42,37 +44,35 @@ if (isset($_SESSION["email"])) { // validate the email coming in
         $_SESSION["type"] = $data[0]["type"];
         $_SESSION["userID"] = $data[0]["userID"];
     }
-
-    if($_POST["name"] === "" || $_POST["species"] === "" || !isset($_POST["age"]) || !isset($_POST["size"]) || !isset($_POST["weight"]) || $_POST["personality"] === "") {
-        $errorMessage="<div class = 'alert alert-danger'>Please provide all your information.</div>"; 
-    } else { 
-        // User was not found.  For our game, we'll just insert them!
-        $insert = $mysqli->prepare("insert into pets (name, species, age, size, weight, personality) values (?, ?, ?, ?, ?, ?);");
-        $insert->bind_param("ssssss", $_POST["name"], $_POST["species"], $_POST["age"], $_POST["size"], $_POST["weight"], $_POST["personality"]);
-        if (!$insert->execute()) {
-            $errorMessage = "<div class = 'alert alert-danger'>Error creating new user</div>";
-        }
-
-        $pet_id = $insert->insert_id;
+    $errorMessage="";
+    if(!empty($_POST)) { 
+        if($_POST["name"] === "" || $_POST["species"] === "" || $_POST["personality"] === "") {
+            $errorMessage="<div class = 'alert alert-danger'>Please provide all your information.</div>"; 
+        } else { 
+            // User was not found.  For our game, we'll just insert them!
+            $insert = $mysqli->prepare("insert into pets (name, species, age, size, weight, personality) values (?, ?, ?, ?, ?, ?);");
+            $insert->bind_param("ssiiis", $_POST["name"], $_POST["species"], $_POST["age"], $_POST["size"], $_POST["weight"], $_POST["personality"]);
+            if (!$insert->execute()) {
+                $errorMessage = "<div class = 'alert alert-danger'>Error creating new user</div>";
+            }
     
-        $insert = $mysqli->prepare("insert into pet2user (userID, petID) values (?, ?);");
-        $insert->bind_param("ii", $_SESSION["userID"], $pet_id);
-        if (!$insert->execute()) {
-            $errorMessage = "<div class = 'alert alert-danger'>Error creating new user</div>";
-        }
-
-        header("Location: profile.php");
-        exit();
+            $pet_id = $insert->insert_id;
+        
+            $insert = $mysqli->prepare("insert into pet2user (userID, petID) values (?, ?);");
+            $insert->bind_param("ii", $_SESSION["userID"], $pet_id);
+            if (!$insert->execute()) {
+                $errorMessage = "<div class = 'alert alert-danger'>Error creating new user</div>";
+            } 
+            header("Location: profile.php");
+        } 
     }
-    
+
 } else {
     // User did not supply email GET parameter, so send them
     // to the login page
     header("Location: index.html");
     exit();
 } 
-
-
 ?>
 
 <!DOCTYPE html>
