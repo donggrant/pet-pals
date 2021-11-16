@@ -120,19 +120,21 @@ if (isset($_SESSION["email"])) { // validate the email coming in
       function displayPets(petList, favoritedPets){
         document.getElementById("display").innerHTML = "";
         for (i = 0; i < petList.length; i++){
-          document.getElementById("display").innerHTML +=
+          var option = "";
+          if(<?php echo json_encode($_SESSION["type"]); ?> === "adopter"){
+            option = "<a href='profile.php?petID=" + petList[i].petID + "' class='btn btn-primary'>Favorite</a>";
+          }
+          document.getElementById("display").innerHTML += 
           "<div class='col'>" + 
-              "<div class='card text-center'>" +
-                "<img class='card-img-top' src='" + (petList[i].picture == null ? "": petList[i].picture) + "' alt='" + petList[i].name + "'>" +
-                "<div class='card-body'>" +
-                  "<h5 class='card-title'>" + petList[i].name + "(" + petList[i].species + ")</h5>";
-                  if(<?php echo json_encode($_SESSION["type"]); ?> === "adopter"){
-                    document.getElementById("display").innerHTML += "<a href='profile.php?petID=" + petList[i].petID + "' class='btn btn-primary'>Favorite</a>";
-                  }
-                document.getElementById("display").innerHTML += 
-                "</div>" +
-              "</div>" +
-            "</div>";
+            "<div class='card text-center'>" +
+              "<img class='card-img-top' src='" + (petList[i].picture == null ? "": petList[i].picture) + "' alt='" + petList[i].name + "'>" +
+              "<div class='card-body'>" +
+                "<h5 class='card-title'>" + petList[i].name + "(" + petList[i].species + ")</h5>" +
+                  option +
+              "</div>" + 
+            "</div>" + 
+          "</div>";
+          console.log(document.getElementById("display").innerHTML)
         }
         for (i = 0; i < favoritedPets.length; i++){
           document.getElementById("display").innerHTML +=
