@@ -134,16 +134,21 @@ if (isset($_SESSION["email"])) { // validate the email coming in
               "</div>" + 
             "</div>" + 
           "</div>";
-          console.log(document.getElementById("display").innerHTML)
         }
         for (i = 0; i < favoritedPets.length; i++){
+          var option = "";
+          if(<?php echo json_encode($_SESSION["type"]); ?> === "adopter"){
+            option = "<a href='profile.php?petID=" + favoritedPets[i].petID + "' class='btn btn-secondary'>Favorite</a>";
+          } else {
+            option = "<a href='removeFavorite.php?petID=" + favoritedPets[i].petID + "' class='btn btn-primary'>Take-off Market</a>";
+          }
           document.getElementById("display").innerHTML +=
           "<div class='col'>" + 
               "<div class='card text-center'>" +
                 "<img class='card-img-top' src='" + (favoritedPets[i].picture == null ? "": favoritedPets[i].picture) + "' alt='" + favoritedPets[i].name + "'>" +
                 "<div class='card-body'>" +
                   "<h5 class='card-title'>" + favoritedPets[i].name + "(" + favoritedPets[i].species + ")</h5>" +
-                  "<a href='profile.php?petID=" + favoritedPets[i].petID + "' class='btn btn-secondary'>Favorite</a>" +
+                  option +
                 "</div>" +
               "</div>" +
             "</div>";
