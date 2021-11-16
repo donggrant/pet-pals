@@ -16,7 +16,7 @@ session_start();
 // submits back to this page, which is okay for now.  We will check for
 // form data and determine whether to re-show this form with a message
 // or to redirect the user to the trivia game. 
-if (isset($_SESSION["email"])) { // validate the email coming in
+if (!empty($_POST)) { // validate the email coming in
     $stmt = $mysqli->prepare("SELECT * FROM users WHERE email = ?;");
     $stmt->bind_param("s", $_SESSION["email"]);
     if (!$stmt->execute()) {

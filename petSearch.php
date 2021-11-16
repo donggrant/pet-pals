@@ -14,7 +14,9 @@ session_start();
 
 // Deal with the current session 
 if (isset($_SESSION["email"])) { // validate the email coming in
-    $stmt = $mysqli->prepare("SELECT * FROM pets WHERE petID != ?;");
+    //$stmt = $mysqli->prepare("SELECT * FROM pets WHERE petID != ?;");
+    $stmt = $mysqli->prepare("SELECT * FROM pets where petID not in (Select petID from pet2user where userID = ?)");
+
     $stmt->bind_param("i", $_SESSION["userID"]);
     if(!$stmt->execute()){
       $error_msg = "Query failed";
@@ -101,7 +103,7 @@ if (isset($_SESSION["email"])) { // validate the email coming in
                 <div class="card-body">
                   <h5 class="card-title"><?= $pet["name"]?> (<?= $pet["species"]?>)</h5>
                   <?php if($_SESSION["type"] == "adopter"){?>
-                  <btn class="btn btn-primary">Favorite</btn>
+                  <btn class="btn btn-secondary">Favorite</btn>
                   <?php } else { ?>
                       <a href="removeFavorite.php?petID=<?= $pet["petID"]?>" class="btn btn-primary">Take-off Market</a>
                   <?php } ?>
@@ -116,6 +118,7 @@ if (isset($_SESSION["email"])) { // validate the email coming in
 			<small>Copyright &copy; 2021 Grant Dong and Hunter Vaccaro. All Rights Reserved</small>
 		</footer>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+        <script type="text/javascript" src="filtering.js"></script>
 	</body>
 </html>
 
