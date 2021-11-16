@@ -73,10 +73,10 @@ if (isset($_SESSION["email"])) { // validate the email coming in
 		</header>
 		<div class="filters"> 
 			<button class="btn btn-primary">Species</button>
-			<button class="btn btn-primary" onclick="filterAge()">Age</button>
-			<button class="btn btn-primary">Sex</button>
-			<button class="btn btn-primary" onclick="filterSize()">Size</button>
-			<button class="btn btn-primary" onclick="filterWeight()">Weight</button>
+			<button class="btn btn-primary" id="age">Age</button>
+			<button class="btn btn-primary" id="sex">Sex</button>
+			<button class="btn btn-primary" id="size">Size</button>
+			<button class="btn btn-primary" id="weight">Weight</button>
 		</div>
 		<section class="results">
 			<div class="container">
@@ -123,7 +123,7 @@ if (isset($_SESSION["email"])) { // validate the email coming in
           document.getElementById("display").innerHTML +=
           "<div class='col'>" + 
               "<div class='card text-center'>" +
-                "<img class='card-img-top' src='" + petList[i].picture + "' alt='" + petList[i].name + "'>" +
+                "<img class='card-img-top' src='" + (petList[i].picture == null ? "": petList[i].picture) + "' alt='" + petList[i].name + "'>" +
                 "<div class='card-body'>" +
                   "<h5 class='card-title'>" + petList[i].name + "(" + petList[i].species + ")</h5>" +
                   "<a href='profile.php?petID=" + petList[i].petID + "' class='btn btn-primary'>Favorite</a>" +
@@ -135,7 +135,7 @@ if (isset($_SESSION["email"])) { // validate the email coming in
           document.getElementById("display").innerHTML +=
           "<div class='col'>" + 
               "<div class='card text-center'>" +
-                "<img class='card-img-top' src='" + favoritedPets[i].picture + "' alt='" + favoritedPets[i].name + "'>" +
+                "<img class='card-img-top' src='" + (favoritedPets[i].picture == null ? "": favoritedPets[i].picture) + "' alt='" + favoritedPets[i].name + "'>" +
                 "<div class='card-body'>" +
                   "<h5 class='card-title'>" + favoritedPets[i].name + "(" + favoritedPets[i].species + ")</h5>" +
                   "<a href='profile.php?petID=" + favoritedPets[i].petID + "' class='btn btn-secondary'>Favorite</a>" +
@@ -145,32 +145,71 @@ if (isset($_SESSION["email"])) { // validate the email coming in
         }
       }
 
-      function filterAge(){
-        var petList = <?php echo json_encode($pets); ?>;
-        var favoritedPets = <?php echo json_encode($favoritePets); ?>;
-        petList.sort((a, b) => (a.age > b.age) ? 1 : -1);
-        
-        // Refresh Pet List With New Ordering
-        displayPets(petList, favoritedPets);
-      }
+      var ageButton = document.getElementById("age");
+      var sizeButton = document.getElementById("size");
+      var weightButton = document.getElementById("weight");
+      var sexButton = document.getElementById("sex");
 
-      function filterSize(){        
-        var petList = <?php echo json_encode($pets); ?>;
-        var favoritedPets = <?php echo json_encode($favoritePets); ?>;
-        petList.sort((a, b) => (a.size > b.size) ? 1 : -1);
-        
-        // Refresh Pet List With New Ordering
-        displayPets(petList, favoritedPets);
-      }
+      var colorWheel = ["green", "red", "rgb(11, 94, 215)"]
 
-      function filterWeight(){
+      ageButton.addEventListener("click", (event) => {
         var petList = <?php echo json_encode($pets); ?>;
         var favoritedPets = <?php echo json_encode($favoritePets); ?>;
-        petList.sort((a, b) => (a.weight > b.weight) ? 1 : -1);
-        
+        ageButton.style.backgroundColor = colorWheel[ (colorWheel.indexOf(ageButton.style.backgroundColor) + 1) % colorWheel.length]
+        if(ageButton.style.backgroundColor == "red") {
+          petList.sort((a, b) => (a.age < b.age) ? 1 : -1); 
+        }
+        else if(ageButton.style.backgroundColor == "green") {
+          petList.sort((a, b) => (a.age > b.age) ? 1 : -1); 
+        }
+
         // Refresh Pet List With New Ordering
         displayPets(petList, favoritedPets);
-      }
+      }); 
+
+      sizeButton.addEventListener("click", (event) => {
+        var petList = <?php echo json_encode($pets); ?>;
+        var favoritedPets = <?php echo json_encode($favoritePets); ?>;
+        sizeButton.style.backgroundColor = colorWheel[ (colorWheel.indexOf(sizeButton.style.backgroundColor) + 1) % colorWheel.length]
+        if(sizeButton.style.backgroundColor == "red") {
+          petList.sort((a, b) => (a.size < b.size) ? 1 : -1); 
+        }
+        else if(sizeButton.style.backgroundColor == "green") {
+          petList.sort((a, b) => (a.size > b.size) ? 1 : -1); 
+        }
+        // Refresh Pet List With New Ordering
+        displayPets(petList, favoritedPets);
+      }); 
+
+      weightButton.addEventListener("click", (event) => {
+        var petList = <?php echo json_encode($pets); ?>;
+        var favoritedPets = <?php echo json_encode($favoritePets); ?>;
+        weightButton.style.backgroundColor = colorWheel[ (colorWheel.indexOf(weightButton.style.backgroundColor) + 1) % colorWheel.length]
+        if(weightButton.style.backgroundColor == "red") {
+          petList.sort((a, b) => (a.weight < b.weight) ? 1 : -1); 
+        }
+        else if(weightButton.style.backgroundColor == "green") {
+          petList.sort((a, b) => (a.weight > b.weight) ? 1 : -1); 
+        }
+
+        // Refresh Pet List With New Ordering
+        displayPets(petList, favoritedPets);
+      }); 
+      
+      sexButton.addEventListener("click", (event) => {
+        var petList = <?php echo json_encode($pets); ?>;
+        var favoritedPets = <?php echo json_encode($favoritePets); ?>;
+        sexButton.style.backgroundColor = colorWheel[ (colorWheel.indexOf(sexButton.style.backgroundColor) + 1) % colorWheel.length]
+        if(sexButton.style.backgroundColor == "red") {
+          petList.sort((a, b) => (a.sex < b.sex) ? 1 : -1); 
+        }
+        else if(sexButton.style.backgroundColor == "green") {
+          petList.sort((a, b) => (a.sex > b.sex) ? 1 : -1); 
+        }
+
+        // Refresh Pet List With New Ordering
+        displayPets(petList, favoritedPets);
+      }); 
 
     </script>
 	</body>
