@@ -14,7 +14,7 @@ session_start();
 // submits back to this page, which is okay for now.  We will check for
 // form data and determine whether to re-show this form with a message
 // or to redirect the user to the trivia game. 
-if (isset($_SESSION["email"])) { // validate the email coming in
+if (!empty($_POST)) { // validate the email coming in
     $stmt = $mysqli->prepare("SELECT * FROM users WHERE email = ?;");
     $stmt->bind_param("s", $_SESSION["email"]);
     if (!$stmt->execute()) {
@@ -43,12 +43,12 @@ if (isset($_SESSION["email"])) { // validate the email coming in
         $_SESSION["userID"] = $data[0]["userID"];
     }
 
-    if($_POST["name"] === "" || $_POST["species"] === "" || !isset($_POST["age"]) || !isset($_POST["size"]) || !isset($_POST["weight"]) || $_POST["personality"] === "") {
+    if($_POST["name"] === "" || $_POST["species"] === "" || $_POST["sex"] === "" || $_POST["personality"] === "") {
         $errorMessage="<div class = 'alert alert-danger'>Please provide all your information.</div>"; 
     } else { 
         // User was not found.  For our game, we'll just insert them!
-        $insert = $mysqli->prepare("insert into pets (name, species, age, size, weight, personality) values (?, ?, ?, ?, ?, ?);");
-        $insert->bind_param("ssssss", $_POST["name"], $_POST["species"], $_POST["age"], $_POST["size"], $_POST["weight"], $_POST["personality"]);
+        $insert = $mysqli->prepare("insert into pets (name, species, age, size, weight, sex, personality) values (?, ?, ?, ?, ?, ?, ?);");
+        $insert->bind_param("ssiiiss", $_POST["name"], $_POST["species"], $_POST["age"], $_POST["size"], $_POST["weight"], $_POST["sex"], $_POST["personality"]);
         if (!$insert->execute()) {
             $errorMessage = "<div class = 'alert alert-danger'>Error creating new user</div>";
         }
@@ -65,12 +65,7 @@ if (isset($_SESSION["email"])) { // validate the email coming in
         exit();
     }
     
-} else {
-    // User did not supply email GET parameter, so send them
-    // to the login page
-    header("Location: index.html");
-    exit();
-} 
+}
 
 
 ?>
