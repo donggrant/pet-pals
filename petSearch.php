@@ -127,7 +127,7 @@ if (isset($_SESSION["email"])) { // validate the email coming in
           document.getElementById("display").innerHTML += 
           "<div class='col'>" + 
             "<div class='card text-center'>" +
-              "<img class='card-img-top' src='" + (petList[i].picture == null ? "": petList[i].picture) + "' alt='" + petList[i].name + "'>" +
+              "<a href='petProfile.php?petID=<?=$pet["petID"]?>'><img class='card-img-top' src='" + (petList[i].picture == null ? "": petList[i].picture) + "' alt='" + petList[i].name + "'></a>" +
               "<div class='card-body'>" +
                 "<h5 class='card-title'>" + petList[i].name + "(" + petList[i].species + ")</h5>" +
                   option +
