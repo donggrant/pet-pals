@@ -73,10 +73,10 @@ if (isset($_SESSION["email"])) { // validate the email coming in
 		</header>
 		<div class="filters"> 
 			<button class="btn btn-primary">Species</button>
-			<button class="btn btn-primary" onclick="filterAge()">Age</button>
+			<button class="btn btn-primary" onclick="filterAge(<?=$_SESSION['type']?>)">Age</button>
 			<button class="btn btn-primary">Sex</button>
-			<button class="btn btn-primary" onclick="filterSize()">Size</button>
-			<button class="btn btn-primary" onclick="filterWeight()">Weight</button>
+			<button class="btn btn-primary" onclick="filterSize(<?=$_SESSION['type']?>)">Size</button>
+			<button class="btn btn-primary" onclick="filterWeight(<?=$_SESSION['type']?>)">Weight</button>
 		</div>
 		<section class="results">
 			<div class="container">
@@ -117,7 +117,7 @@ if (isset($_SESSION["email"])) { // validate the email coming in
 		</footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script>
-      function displayPets(petList, favoritedPets){
+      function displayPets(petList, favoritedPets, type){
         document.getElementById("display").innerHTML = "";
         for (i = 0; i < petList.length; i++){
           document.getElementById("display").innerHTML +=
@@ -125,8 +125,10 @@ if (isset($_SESSION["email"])) { // validate the email coming in
               "<div class='card text-center'>" +
                 "<img class='card-img-top' src='" + petList[i].picture + "' alt='" + petList[i].name + "'>" +
                 "<div class='card-body'>" +
-                  "<h5 class='card-title'>" + petList[i].name + "(" + petList[i].species + ")</h5>" +
-                  "<a href='profile.php?petID=" + petList[i].petID + "' class='btn btn-primary'>Favorite</a>" +
+                  "<h5 class='card-title'>" + petList[i].name + "(" + petList[i].species + ")</h5>";
+                  if(type === "adopter"){
+                    document.getElementById("display").innerHTML += "<a href='profile.php?petID=" + petList[i].petID + "' class='btn btn-primary'>Favorite</a>";
+                  }
                 "</div>" +
               "</div>" +
             "</div>"
@@ -145,31 +147,31 @@ if (isset($_SESSION["email"])) { // validate the email coming in
         }
       }
 
-      function filterAge(){
+      function filterAge(type){
         var petList = <?php echo json_encode($pets); ?>;
         var favoritedPets = <?php echo json_encode($favoritePets); ?>;
         petList.sort((a, b) => (a.age > b.age) ? 1 : -1);
         
         // Refresh Pet List With New Ordering
-        displayPets(petList, favoritedPets);
+        displayPets(petList, favoritedPets, type);
       }
 
-      function filterSize(){        
+      function filterSize(type){        
         var petList = <?php echo json_encode($pets); ?>;
         var favoritedPets = <?php echo json_encode($favoritePets); ?>;
         petList.sort((a, b) => (a.size > b.size) ? 1 : -1);
         
         // Refresh Pet List With New Ordering
-        displayPets(petList, favoritedPets);
+        displayPets(petList, favoritedPets, type);
       }
 
-      function filterWeight(){
+      function filterWeight(type){
         var petList = <?php echo json_encode($pets); ?>;
         var favoritedPets = <?php echo json_encode($favoritePets); ?>;
         petList.sort((a, b) => (a.weight > b.weight) ? 1 : -1);
         
         // Refresh Pet List With New Ordering
-        displayPets(petList, favoritedPets);
+        displayPets(petList, favoritedPets, type);
       }
 
     </script>

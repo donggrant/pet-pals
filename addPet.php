@@ -46,33 +46,24 @@ if (!empty($_POST)) { // validate the email coming in
     }
     $errorMessage="";
     if(!empty($_POST)) { 
-        if($_POST["name"] === "" || $_POST["species"] === "" || $_POST["personality"] === "") {
-            $errorMessage="<div class = 'alert alert-danger'>Please provide all your information.</div>"; 
-        } else { 
-            // User was not found.  For our game, we'll just insert them!
-            $insert = $mysqli->prepare("insert into pets (name, species, age, size, weight, personality) values (?, ?, ?, ?, ?, ?);");
-            $insert->bind_param("ssiiis", $_POST["name"], $_POST["species"], $_POST["age"], $_POST["size"], $_POST["weight"], $_POST["personality"]);
-            if (!$insert->execute()) {
-                $errorMessage = "<div class = 'alert alert-danger'>Error creating new user</div>";
-            }
+        // User was not found.  For our game, we'll just insert them!
+        $insert = $mysqli->prepare("insert into pets (name, species, age, size, weight, personality) values (?, ?, ?, ?, ?, ?);");
+        $insert->bind_param("ssiiis", $_POST["name"], $_POST["species"], $_POST["age"], $_POST["size"], $_POST["weight"], $_POST["personality"]);
+        if (!$insert->execute()) {
+            $errorMessage = "<div class = 'alert alert-danger'>Error creating new user</div>";
+        }
+
+        $pet_id = $insert->insert_id;
     
-            $pet_id = $insert->insert_id;
-        
-            $insert = $mysqli->prepare("insert into pet2user (userID, petID) values (?, ?);");
-            $insert->bind_param("ii", $_SESSION["userID"], $pet_id);
-            if (!$insert->execute()) {
-                $errorMessage = "<div class = 'alert alert-danger'>Error creating new user</div>";
-            } 
-            header("Location: profile.php");
+        $insert = $mysqli->prepare("insert into pet2user (userID, petID) values (?, ?);");
+        $insert->bind_param("ii", $_SESSION["userID"], $pet_id);
+        if (!$insert->execute()) {
+            $errorMessage = "<div class = 'alert alert-danger'>Error creating new user</div>";
         } 
+        header("Location: profile.php");
     }
 
-} else {
-    // User did not supply email GET parameter, so send them
-    // to the login page
-    header("Location: index.html");
-    exit();
-} 
+}
 ?>
 
 <!DOCTYPE html>
@@ -105,7 +96,7 @@ if (!empty($_POST)) { // validate the email coming in
 			</nav>
 		</header>
         <a class="btn btn-primary" href="profile.php"><h4>Back</h4></a>
-        <form action="addPet.php" method="post">
+        <form action="addPet.php" name="petForm" onSubmit="return validateForm()" method="post">
             <?=$errorMessage?>
             <div class="form-group">
                 <label>Name:</label>
@@ -147,5 +138,20 @@ if (!empty($_POST)) { // validate the email coming in
 			<small>Copyright &copy; 2021 Grant Dong and Hunter Vaccaro. All Rights Reserved</small>
 		</footer>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+        <script>
+            function validateForm() {
+                let form = document.forms["petForm"];
+                let name = form["name"].value;
+                let personality = form["personality"].value;
+                let spacies = form["species"].value;
+                let age = form["age"].value;
+                let weight = form["weight"].value;
+                let size = form["size"].value;
+                if (age == "" || name == "" || weight == "" || personality == "" || size == "" || species == "") {
+                    alert("Please Fill All Required Fields");
+                    return false;
+                }
+            }
+        </script>
 	</body>
 </html>
