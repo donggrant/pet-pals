@@ -1,0 +1,24 @@
+form, #txtHint {
+    text-align: center;
+    margin-left: 20%;
+    margin-right: 20%;
+    width: auto;
+}
+input {
+    margin: 2%;
+}
+
+label {
+    font-size: 20px;
+    margin-top: 2%;
+}
+
+#txtHint table {
+    width: 100%;
+}
+
+#txtHint table, th, td {
+    border: 1px solid white;
+    padding: 10px;
+    text-align: center;
+}
