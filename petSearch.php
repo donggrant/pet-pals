@@ -57,6 +57,8 @@ if (isset($_SESSION["email"])) { // validate the email coming in
 		<meta name="author" content="Grant Dong and Hunter Vaccaro">
 		<meta name="description" content="pet matching application">
 		<meta name="keywords" content="pet pals animals matching adopting">  
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     
 	</head>  
 	<body class="petSearch">
@@ -190,20 +192,22 @@ if (isset($_SESSION["email"])) { // validate the email coming in
         displayPets(petList, favoritedPets);
       }); 
 
-      weightButton.addEventListener("click", (event) => {
-        var petList = <?php echo json_encode($pets); ?>;
-        var favoritedPets = <?php echo json_encode($favoritePets); ?>;
-        weightButton.style.backgroundColor = colorWheel[ (colorWheel.indexOf(weightButton.style.backgroundColor) + 1) % colorWheel.length]
-        if(weightButton.style.backgroundColor == "red") {
-          petList.sort((a, b) => (a.weight < b.weight) ? 1 : -1); 
-        }
-        else if(weightButton.style.backgroundColor == "green") {
-          petList.sort((a, b) => (a.weight > b.weight) ? 1 : -1); 
-        }
+      $(document).ready(function (){
+        $("#weight").click(function(){
+          var petList = <?php echo json_encode($pets); ?>;
+          var favoritedPets = <?php echo json_encode($favoritePets); ?>;
+          $(this).css("background-color", colorWheel[ (colorWheel.indexOf(weightButton.style.backgroundColor) + 1) % colorWheel.length]);
+          if(weightButton.style.backgroundColor == "red") {
+            petList.sort((a, b) => (a.weight < b.weight) ? 1 : -1); 
+          }
+          else if(weightButton.style.backgroundColor == "green") {
+            petList.sort((a, b) => (a.weight > b.weight) ? 1 : -1); 
+          }
 
-        // Refresh Pet List With New Ordering
-        displayPets(petList, favoritedPets);
-      }); 
+          // Refresh Pet List With New Ordering
+          displayPets(petList, favoritedPets);
+        });
+      });
       
       sexButton.addEventListener("click", (event) => {
         var petList = <?php echo json_encode($pets); ?>;
