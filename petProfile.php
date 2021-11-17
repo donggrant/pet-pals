@@ -69,7 +69,7 @@
             // asynchronously waits for a json response
             ajax.onreadystatechange = function() {
                 if(this.readyState == 4 && this.status == 200) {
-                    //pets = JSON.parse(this.responseText);
+                    pets = JSON.parse(this.responseText);
                     alert(this.responseText); 
                 }
             }
