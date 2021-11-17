@@ -97,7 +97,7 @@ if (isset($_SESSION["email"])) { // validate the email coming in
           <?php foreach($favoritePets as $pet){ ?>
             <div class="col">
               <div class="card text-center">
-                <img class="card-img-top" src="<?= $pet["picture"]?>" alt="<?=$pet["name"]?>">
+                <a href="petProfile.php?petID=<?=$pet["petID"]?>"><img class="card-img-top" src="<?= $pet["picture"]?>" alt="<?=$pet["name"]?>"></a>
                 <div class="card-body">
                   <h5 class="card-title"><?= $pet["name"]?> (<?= $pet["species"]?>)</h5>
                   <?php if($_SESSION["type"] == "adopter"){?>
