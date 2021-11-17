@@ -136,9 +136,9 @@ if (isset($_SESSION["email"])) { // validate the email coming in
                     <?php foreach($pets as $pet){ ?>
                         <div class="col">
                         <div class="card text-center">
-                            <img style="color: black;" class="card-img-top" src="<?= $pet["picture"]?>" alt="<?=$pet["name"]?>">
+                            <a href="petProfile.php?petID=<?=$pet["petID"]?>"><img class="card-img-top" src="<?= $pet["picture"]?>" alt="<?=$pet["name"]?>"></a>
                             <div class="card-body">
-                            <h5 class="card-title"><?= $pet["name"]?> (<?= $pet["species"]?>)</h5>
+                            <h5 style="color:black;" class="card-title"><?= $pet["name"]?> (<?= $pet["species"]?>)</h5>
                             <?php if($_SESSION["type"] == "adopter"){?>
                             <a href="removeFavorite.php?petID=<?= $pet["petID"]?>" class="btn btn-primary">Unfavorite</a>
                             <?php } else { ?>
