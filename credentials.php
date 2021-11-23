@@ -2,10 +2,10 @@
 
 /******************************/
 // [Spring 2021] connecting to DB on CS server
-$username = 'gdd7jh';
-$password = 's343ysfJ5Dr2';
-$host = 'cs4640.cs.virginia.edu';
-$dbname = 'gdd7jh';
+$username = 'root';
+$password = '';
+$host = 'localhost';
+$dbname = 'pet_pals';
 /******************************/
 
 $dsn = "mysql:host=$host;dbname=$dbname";
