@@ -29,6 +29,7 @@ body {
 	color: white;
 	background-color: rgb(95, 218, 255);
 	font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+	padding-bottom: 50px;
 }
 
 h1 {font-size: 45px;}
@@ -45,6 +46,13 @@ a {
 
 a:hover {
 	color: yellow;
+}
+
+footer {
+	position:fixed;
+	left:0px;
+	bottom:0px;
+	width:100%;
 }
 
 header, footer {

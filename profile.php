@@ -97,8 +97,8 @@ if (isset($_SESSION["email"])) { // validate the email coming in
                 <a href="signOut.php"><h4>Sign Out</h4></a>
 			</nav>
 		</header>
-        <section> 
-            <div class = "profile-info-group">
+        <section class="container"> 
+            <div id = "profile-info-group">
             <img class="profile-icon" src="images/profile-icon.png" alt="profile icon"> 
                 <div class = "biography-text" >
                     <div class ="profile-name">
@@ -111,13 +111,13 @@ if (isset($_SESSION["email"])) { // validate the email coming in
                     </div>
                 </div> 
             </div>
-            <div class = "profile-detail-group">  
-                <div class = "profile-hobbies">
+            <div class="row row-cols-1 row-cols-md-2" id="profile-info-group">  
+                <div class = "col" id = "profile-hobbies">
                     <h3>Hobbies &amp; Lifestyle</h3> 
                     <br>
                     <h5><?php echo $_SESSION["hobbies"]; ?></h5>
                 </div>
-                <div class = "profile-experience">
+                <div class = "col" id = "profile-experience">
                     <h3>Habits &amp; Experience</h3> 
                     <br>
                     <h5><?php echo $_SESSION["habits"]; ?></h5>

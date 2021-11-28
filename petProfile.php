@@ -28,8 +28,8 @@
                 <a href="signOut.php"><h4>Sign Out</h4></a>
 			</nav>
 		</header>
-        <section> 
-            <div class = "profile-info-group">
+        <section class="container"> 
+            <div id = "profile-info-group">
             <img id = "profile-icon" class="profile-icon" src="images/profile-icon.png" alt="profile icon"> 
                 <div class = "biography-text" >
                     <div class ="profile-name" id="profile-name"></div>
@@ -39,13 +39,13 @@
                      </div>
                 </div> 
             </div>
-            <div class = "profile-detail-group">  
-                <div class = "profile-hobbies">
+            <div class="row row-cols-1 row-cols-md-2" id="profile-info-group">  
+                <div class="col" id = "profile-hobbies">
                     <h2>Personality</h2> 
                     <div id = "personality-text"></div>
                     <br>
                  </div>
-                <div class = "profile-experience">
+                <div class="col" id = "profile-experience">
                     <h2>Basic Information</h2> 
                     <div id = "binfo-text"></div>
                     <br>
