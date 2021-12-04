@@ -91,13 +91,13 @@ if (isset($_SESSION["email"])) { // validate the email coming in
 			<nav>
                 <img src="images/pet-pals-icon.png" alt="pet pal icon"/>
                 <a href="petSearch.php"><h4>Find a Pet</h4></a>
-                <a href="peopleSearch.html"><h4>People Search</h4></a>
+                <a href="http://localhost:4200/"><h4>People Search</h4></a>
                 <a href="chat.php"><h4>My Chats</h4></a>
                 <a href="profile.php"><h4>My Profile</h4></a>
                 <a href="signOut.php"><h4>Sign Out</h4></a>
 			</nav>
 		</header>
-        <section class="container"> 
+        <section> 
             <div id = "profile-info-group">
             <img class="profile-icon" src="images/profile-icon.png" alt="profile icon"> 
                 <div class = "biography-text" >
